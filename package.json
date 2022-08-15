@@ -5,14 +5,16 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "serve": "webpack-dev-server --mode development",
-    "build": "webpack --mode production"
+    "serve": "webpack-dev-server --mode development --history-api-fallback",
+    "build": "webpack --mode production",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
