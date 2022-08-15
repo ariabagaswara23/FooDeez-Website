@@ -1,5 +1,6 @@
-@import "./_mixins.scss";
-@import "./_variables.scss";
+@import 'mixins';
+@import 'variables';
+@import 'responsive';
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
@@ -22,10 +23,6 @@ body {
     flex-direction: column;
 }
 
-h2 {
-    font-size: 1.5rem;
-}
-
 p {
     margin: 0;
 }
@@ -36,6 +33,7 @@ a {
     outline: none;
 }
 
+a,
 button {
     cursor: pointer;
 }
@@ -63,8 +61,6 @@ select,
 input,
 textarea {
     min-height: 44px;
-    background-color: #d0cdcd;
-    border-radius: 10px;
     border: 0;
 }
 
@@ -79,9 +75,29 @@ textarea {
     display: flex;
     flex-wrap: wrap;
 
+    &.justify-center {
+        justify-content: center;
+    }
+
     &.justify-between {
         justify-content: space-between;
     }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 40px;
+    padding: 2.5rem;
+
+    @include tablet {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.center {
+    text-align: center;
 }
 
 .item-center {
@@ -92,13 +108,29 @@ textarea {
 }
 
 .rounded {
-    border-radius: 0.5rem;
+    border-radius: 5px;
+}
+
+.material-icons {
+    vertical-align: middle !important;
+    user-select: none;
+    position: relative;
+    top: -2px;
 }
 
 footer {
     color: $white-color;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 3rem;
     padding: 1.5rem;
-    background-color: $primary-color;
+    background-color: $tertiary-color;
+
+    .brand-title {
+        color: $primary-color;
+        font-weight: bold;
+
+        span {
+            color: $brand-secondary-color;
+        }
+    }
 }
