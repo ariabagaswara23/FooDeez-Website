@@ -107,6 +107,96 @@ textarea {
     margin-right: auto;
 }
 
+.content-title {
+    color: $primary-color;
+    padding: 1rem;
+    text-align: center;
+}
+
+.content-sub-title {
+    color: $tertiary-color;
+}
+
+.food-menu-wrapper {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+
+    .food-menu-item {
+        background-color: $white-color;
+        border: 0;
+        border-radius: 15px;
+        padding: 15px 20px;
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+
+        .food-img {
+            width: 100%;
+            height: 200px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .food-content {
+            padding: 10px 0px;
+
+            .food-title {
+                color: $primary-color;
+                margin-bottom: 10px;
+            }
+
+            .food-description {
+                color: $tertiary-color;
+            }
+
+            .add-to-cart-button {
+                margin-top: 15px;
+                padding: 5px 15px;
+                font-size: 1.1rem;
+                text-transform: uppercase;
+                border: 0;
+                width: 100%;
+                border-radius: 10px;
+                box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+                background-color: $brand-secondary-color;
+                color: $white-color;
+                transition: 0.5s;
+
+                &:focus {
+                    background: $brand-secondary-color;
+                    color: $white-color;
+                    outline: 2px solid $brand-secondary-color;
+                }
+
+                &:hover {
+                    background: $primary-color;
+                    color: $white-color;
+                }
+            }
+        }
+    }
+
+    .more-button {
+        padding: 5px 15px;
+        border: 0;
+        border-radius: 10px;
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+        background-color: $brand-secondary-color;
+        color: $white-color;
+        transition: 0.5s;
+
+        &:focus {
+            background: $brand-secondary-color;
+            color: $white-color;
+            outline: 2px solid $brand-secondary-color;
+        }
+
+        &:hover {
+            background: $primary-color;
+            color: $white-color;
+        }
+    }
+}
+
 .rounded {
     border-radius: 5px;
 }
