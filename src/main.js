@@ -4,8 +4,20 @@ import router from './router'
 import store from './store'
 import "./scss/main.scss";
 
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
 
-const app = createApp(App)
-app.use(router)
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-app.mount('#app')
+/* import specific icons */
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+/* add icons to the library */
+library.add(fas)
+
+
+createApp(App)
+  .use(router)
+  .component('font-awesome-icon', FontAwesomeIcon)
+  .mount('#app')
