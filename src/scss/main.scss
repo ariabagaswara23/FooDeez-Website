@@ -1,0 +1,104 @@
+@import "./_mixins.scss";
+@import "./_variables.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+    font-family: 'DM Sans', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    scroll-behavior: smooth;
+    background-color: $secondary-color;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+.navbar-bg-primary {
+    background-color: $navbar-background-color
+}
+
+.bg-primary {
+    background-color: $primary-color;
+}
+
+.text-primary {
+    color: $primary-color;
+}
+
+a,
+button,
+input[type="text"] {
+    min-width: 44px;
+    min-height: 44px;
+}
+
+select,
+input,
+textarea {
+    min-height: 44px;
+    background-color: #d0cdcd;
+    border-radius: 10px;
+    border: 0;
+}
+
+.container {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+
+    &.justify-between {
+        justify-content: space-between;
+    }
+}
+
+.item-center {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rounded {
+    border-radius: 0.5rem;
+}
+
+footer {
+    color: $white-color;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background-color: $primary-color;
+}

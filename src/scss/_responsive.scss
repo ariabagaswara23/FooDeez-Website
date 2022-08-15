@@ -1,0 +1,15 @@
+// Media Query
+$tablet: 768;
+$desktop: 1140;
+
+@mixin tablet {
+    @media only screen and (min-width: ($tablet * 1px)) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media only screen and (min-width: ($desktop * 1px)) {
+        @content;
+    }
+}
