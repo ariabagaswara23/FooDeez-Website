@@ -11,6 +11,24 @@ const routes = [{
   name: 'menu',
   component: () =>
     import('../views/Menu.vue')
+},
+{
+  path: '/gallery',
+  name: 'gallery',
+  component: () =>
+    import('../views/Gallery.vue')
+},
+{
+  path: '/cart',
+  name: 'cart',
+  component: () =>
+    import('../views/Cart.vue')
+},
+{
+  path: '/checkout',
+  name: 'checkout',
+  component: () =>
+    import('../views/Checkout.vue')
 }
 ]
 

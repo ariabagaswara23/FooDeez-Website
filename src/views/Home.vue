@@ -4,32 +4,11 @@
     <div class="container" id="page-content">
       <div class="food-menu-wrapper">
         <h1 class="content-title">Search foods you want to eat</h1>
+        <p class="content-sub-title">
+          You can find a lot of foods here
+        </p>
         <div class="food-menu-list grid">
-          <div class="food-menu-item">
-            <img class="food-img" src="../assets/hero.jpg" alt="">
-            <div class="food-content">
-              <h2 class="food-title">Ayam Geprek</h2>
-              <p class="food-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-                dignissimos officia ipsa neque illo recusandae.</p>
-            </div>
-          </div>
-          <div class="food-menu-item">
-            <img class="food-img" src="../assets/hero.jpg" alt="">
-            <div class="food-content">
-              <h2 class="food-title">Ayam Geprek</h2>
-              <p class="food-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-                dignissimos officia ipsa neque illo recusandae.</p>
-            </div>
-          </div>
-          <div class="food-menu-item">
-            <img class="food-img" src="../assets/hero.jpg" alt="">
-            <div class="food-content">
-              <h2 class="food-title">Ayam Geprek</h2>
-              <p class="food-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-                dignissimos officia ipsa neque illo recusandae.</p>
-            </div>
-          </div>
-          <div class="food-menu-item">
+          <div class="food-menu-item" v-for="i in 8" :key="i">
             <img class="food-img" src="../assets/hero.jpg" alt="">
             <div class="food-content">
               <h2 class="food-title">Ayam Geprek</h2>
@@ -38,12 +17,11 @@
             </div>
           </div>
         </div>
-        <button class="more-button">
-          See More
-        </button>
-        <!-- <router-link>
-
-        </router-link> -->
+        <router-link :to="{ name: 'menu' }">
+          <button class="more-button">
+            See More
+          </button>
+        </router-link>
       </div>
     </div>
   </div>

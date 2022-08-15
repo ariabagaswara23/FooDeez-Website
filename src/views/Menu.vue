@@ -26,4 +26,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import "./../scss/_responsive.scss";
+@import "./../scss/_variables.scss";
 </style>

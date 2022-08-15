@@ -3,23 +3,24 @@
     <nav class="navbar-bg-primary" id="drawer">
       <p class="brand-title"><i>FOO<span>DEEZ</span></i></p>
       <ul class="menu-desktop">
-        <li class="nav-item mr-5">
+        <li class="nav-item">
           <router-link :to="{ name: 'home' }">Home</router-link>
         </li>
-        <li class="nav-item mr-5">
+        <li class="nav-item ml-3 mr-3">
           <router-link :to="'menu'">Menu</router-link>
         </li>
-        <li class="nav-item mr-5">
+        <li class="nav-item">
           <router-link :to="'gallery'">Gallery</router-link>
         </li>
+      </ul>
+      <ul class="menu-desktop">
         <li class="nav-item mr-5" id="dropdown">
           <router-link :to="'cart'">Cart</router-link>
         </li>
       </ul>
-
       <a @click="toggle" id="hamburger" class="mr-1" aria-label="Hamburger">☰</a>
     </nav>
-    <ul ref="mobileMenu" class="menu-mobile p-8">
+    <ul ref="mobileMenu" class="menu-mobile pt-8">
             <li class="nav-item">
                 <router-link :to="{ name: 'home' }">Home</router-link>
             </li>
@@ -72,6 +73,18 @@ nav {
   align-items: center;
   transition: background-color 1s ease;
   z-index: 10;
+
+  .nav-item a {
+    transition: 0.5s;
+
+    &:focus {
+      color: $brand-secondary-color;
+    }
+
+    &:hover {
+      color: $brand-secondary-color;
+    }
+  }
 
   @include tablet {
     // background-color: transparent;
