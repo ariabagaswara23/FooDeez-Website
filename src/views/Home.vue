@@ -8,12 +8,10 @@
           You can find a lot of foods here
         </p>
         <div class="food-menu-list grid">
-          <div class="food-menu-item" v-for="i in 8" :key="i">
-            <img class="food-img" src="../assets/hero.jpg" alt="">
+          <div class="food-menu-item" v-for="food in foods.slice(0, 8)" :key="food.idMeal">
+            <img class="food-img" :src="food.strMealThumb" alt="">
             <div class="food-content">
-              <h2 class="food-title">Ayam Geprek</h2>
-              <p class="food-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-                dignissimos officia ipsa neque illo recusandae.</p>
+              <h2 class="food-title">{{ food.strMeal }}</h2>
             </div>
           </div>
         </div>
@@ -29,10 +27,25 @@
 
 <script>
 import Hero from "../components/Hero.vue"
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 export default {
   name: 'Home',
   components: {
     Hero
+  },
+  setup() {
+    const store = useStore()
+
+    onMounted(() => {
+      store.dispatch('home/fetchFoods', 'Japanese')
+    })
+    const foods = computed(() => {
+      return store.state.home.foods
+    })
+    return {
+      foods
+    }
   }
 }
 </script>
