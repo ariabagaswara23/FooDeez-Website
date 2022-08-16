@@ -20,15 +20,15 @@
             <img class="food-img" :src="food.strMealThumb" alt="">
             <div class="food-content">
               <h2 class="food-title">{{ food.strMeal }}</h2>
-              <button class="add-to-cart-button">
-                Add to Cart
+              <button class="add-to-cart-button" @click.prevent="addToCart(food)">
+                <font-awesome-icon icon="fa-solid fa-cart-plus" /> Add to Cart
               </button>
             </div>
           </div>
         </div>
         <div class="center mt-5" v-else>
           <img src="../assets/not-found.png" class="img-not-found" />
-          <h2 class="text-not-found">Makanan tidak ditemukan.</h2>
+          <h2 class="text-not-found">Oops, looks like the food you are looking for is not available</h2>
         </div>
       </div>
     </div>
@@ -37,6 +37,7 @@
 <script>
 import { useStore } from 'vuex'
 import { computed, onMounted, ref } from 'vue'
+import Swal from 'sweetalert2'
 
 
 export default {
@@ -68,11 +69,27 @@ export default {
         store.dispatch('menu/fetchFoods', 'pasta')
       }
     }
+
+    const addToCart = (food) => {
+      store.dispatch('cart/addFoodToCart', {
+        food,
+        quantity: 1
+      })
+      Swal.fire({
+        title: "Success",
+        icon: "success",
+        text: "Success Add Food to Cart",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+
     return {
       searchFood,
       foods,
       filteredFood,
-      onChange
+      onChange,
+      addToCart
     }
 
   }

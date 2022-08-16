@@ -15,9 +15,13 @@
       </ul>
       <ul class="menu-desktop">
         <li class="nav-item mr-5" id="dropdown">
-          <router-link :to="'cart'">Cart</router-link>
+          <router-link :to="'cart'">
+            <span class="cart-badge" v-if="cartCount">{{ cartCount }}</span>
+            <font-awesome-icon icon="fa-solid fa-cart-shopping" />
+          </router-link>
         </li>
       </ul>
+      <span class="cart-hamburger-badge" v-if="cartCount">{{ cartCount }}</span>
       <a @click="toggle" id="hamburger" class="mr-1" aria-label="Hamburger">☰</a>
     </nav>
     <ul ref="mobileMenu" class="menu-mobile pt-8">
@@ -31,7 +35,9 @@
                 <router-link :to="'gallery'">Gallery</router-link>
             </li>
             <li class="nav-item" id="dropdown">
-                <router-link :to="'cart'">Cart</router-link>
+                <router-link :to="'cart'">
+                  Cart <p class="cart-mobile-count" v-if="cartCount">{{ cartCount }}</p>
+                </router-link>
             </li>
       </ul>
   </header>
@@ -62,6 +68,42 @@ export default {
 <style lang="scss" scoped>
 @import "./../scss/_responsive.scss";
 @import "./../scss/_variables.scss";
+
+.cart-badge {
+  background-color: #e61919;
+  color: #ffffff;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  font-size: 10px;
+  top: 25px;
+  right: 60px;
+  width: 15px;
+  height: 15px;
+  z-index: 10;
+  border-radius: 50%;
+}
+
+.cart-hamburger-badge {
+  background-color: #e61919;
+  color: #ffffff;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  font-size: 10px;
+  top: 30px;
+  right: 40px;
+  width: 15px;
+  height: 15px;
+  z-index: 10;
+  border-radius: 50%;
+
+  @include tablet {
+    display: none;
+  }
+}
 
 nav {
   display: flex;
@@ -148,6 +190,16 @@ nav {
 
   }
 
+  .cart-mobile-count {
+    color: #fff;
+    display: inline;
+    background-color: red;
+    padding: 2px 8px;
+    border-radius: 50%;
+    border: 0;
+  }
+
+
   li {
     a {
       position: relative;
@@ -155,21 +207,6 @@ nav {
       display: inline-block;
     }
 
-    .badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      top: -8px;
-      right: 30px;
-      font-size: 12px;
-      width: 20px;
-      height: 20px;
-      z-index: 10;
-      border-radius: 50%;
-      background-color: $red-color;
-      color: $white-color;
-    }
   }
 }
 

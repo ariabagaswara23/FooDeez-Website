@@ -46,6 +46,7 @@ export default {
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 5vw);
   grid-gap: 1.5rem;
+  padding: 15px;
 
   .gallery__item--1 {
     grid-column-start: 1;
