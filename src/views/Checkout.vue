@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex mt-15 mb-15">
+  <div class="container flex pt-15 pb-15">
     <div class="checkout-container">
       <div class="checkout-title rounded">
         <h1>Checkout</h1>
@@ -7,59 +7,148 @@
       <div class="checkout-form">
         <div class="flex">
           <div class="form-group name">
-            <label for="name">Nama</label>
-            <input class="rounded mt-1" type="text" required name="name" id="name" />
-            <!-- <div v-if="validation.name" class="text-danger" style="margin-top: 5px;">Masukkan Nama Lengkap</div> -->
+            <input class="rounded mt-1" type="text" required name="name" id="name" v-model="state.name"
+              placeholder="Full Name" />
+            <div v-if="validation.name" class="text-danger" style="margin-top: 5px;">Please Insert Name</div>
           </div>
           <div class="form-group phone">
-            <label for="phone">No. Telepon</label>
-            <input class="rounded mt-1" type="number" required name="phone" id="phone" />
-            <!-- <div v-if="validation.phone" class="text-danger" style="margin-top: 5px;">Masukkan No. Telepon</div> -->
+            <input class="rounded mt-1" type="number" required name="phone" id="phone" v-model="state.phone"
+              placeholder="Phone Number" />
+            <div v-if="validation.phone" class="text-danger" style="margin-top: 5px;">Please Insert Phone Number</div>
           </div>
           <div class="form-group city">
-            <label for="city">Kota</label>
-            <select class="rounded mt-1" name="city" required id="city">
+            <select class="rounded mt-1" name="city" required id="city" v-model="state.city" @change="onChange($event)">
+              <option value="">Select City</option>
               <option value="cimahi">Cimahi</option>
               <option value="bandung">Bandung</option>
               <option value="jakarta">Jakarta</option>
-              <option value="bekasi">Bekasi</option>
+              <option value="palembang">Palembang</option>
+              <option value="medan">Medan</option>
             </select>
-            <!-- <div v-if="validation.city" class="text-danger" style="margin-top: 5px;">Masukkan Kota</div> -->
+            <div v-if="validation.city" class="text-danger" style="margin-top: 5px;">Please Insert City</div>
           </div>
           <div class="form-group zipcode">
-            <label for="zipcode">Kode POS</label>
-            <input class="rounded mt-1" type="number" required name="zipcode" id="zip" />
-            <!-- <div v-if="validation.zipcode" class="text-danger" style="margin-top: 5px;">Masukkan Kode POS</div> -->
+
+            <input class="rounded mt-1" type="number" required name="zipcode" id="zip" v-model="state.zipcode"
+              placeholder="Zip Code" />
+            <div v-if="validation.zipcode" class="text-danger" style="margin-top: 5px;">Please Insert ZipCode</div>
           </div>
         </div>
         <div class="form-group mt-1">
-          <label for="address">Alamat</label>
-          <textarea class="rounded mt-1" name="address" required id="address" rows="4"></textarea>
-          <!-- <div v-if="validation.address" class="text-danger">Masukkan Alamat</div> -->
+          <textarea class="rounded mt-1" name="address" required id="address" rows="4" v-model="state.address"
+            placeholder="Address"></textarea>
+          <div v-if="validation.address" class="text-danger">Please Insert Address</div>
         </div>
       </div>
     </div>
     <div class="checkout-summary rounded">
       <h1>Order Summary</h1>
       <div class="flex justify-between mt-2">
-        <p>Total Harga (3 barang)</p>
-        <p>Rp. 100.000</p>
+        <p>Cost ({{ cartCount }})</p>
+        <p>Rp.{{ moneyFormat(orderSummary * 20000) }}</p>
       </div>
       <div class="flex justify-between mt-2">
-        <p>Ongkos Kirim (3 barang)</p>
-        <p>Rp. 100.000</p>
+        <p>Delivery Cost ({{ cartCount }})</p>
+        <p>Rp.{{ moneyFormat(price) }}</p>
       </div>
       <div class="flex summary-total justify-between mt-2 mb-2">
-        <p>Total Harga</p>
-        <p>Rp. 100.000</p>
+        <p>Cost Total</p>
+        <p>Rp.{{ moneyFormat((orderSummary * 20000) + price) }}</p>
       </div>
+      <button @click="checkout" class="bg-primary center summary-button rounded">Pay Now</button>
       <!-- <router-link :to="{ name: 'checkout' }" class="bg-primary center summary-button rounded">Checkout</router-link> -->
     </div>
   </div>
 </template>
 <script>
+import { computed, reactive, ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+
 export default {
-  name: 'Checkout'
+  name: 'Checkout',
+  setup() {
+    const store = useStore()
+
+    const router = useRouter()
+
+    const cartCount = computed(() => {
+      return store.getters['cart/cartCount']
+    })
+    const orderSummary = computed(() => {
+      return store.getters['cart/orderSummary']
+    })
+
+    const state = reactive({
+      name: '',
+      phone: '',
+      city: '',
+      zipcode: '',
+      address: '',
+    })
+    const price = ref(0)
+    const validation = reactive({
+      name: false,
+      phone: false,
+      city: false,
+      zipcode: false,
+      address: false
+    })
+    const onChange = (event) => {
+      if (event.target.value === "cimahi") {
+        price.value = 5000;
+      } else if (event.target.value === "bandung") {
+        price.value = 7000;
+      } else if (event.target.value === "jakarta") {
+        price.value = 20000;
+      } else if (event.target.value === "palembang") {
+        price.value = 40000;
+      } else if (event.target.value === "medan") {
+        price.value = 70000;
+      }
+      return price;
+    }
+    const checkout = () => {
+      if (state.name && state.phone && state.address && state.city && state.zipcode) {
+        store.dispatch('cart/clearCart')
+        router.push({
+          name: 'home',
+        })
+        Swal.fire({
+          title: "Checkout Success!",
+          text: "Your Order will be processed",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
+      if (!state.name) {
+        validation.name = true
+      }
+      if (!state.phone) {
+        validation.phone = true
+      }
+      if (!state.city) {
+        validation.city = true
+      }
+      if (!state.zipcode) {
+        validation.zipcode = true
+      }
+      if (!state.address) {
+        validation.address = true
+      }
+    }
+    return {
+      cartCount,
+      orderSummary,
+      state,
+      price,
+      validation,
+      onChange,
+      checkout
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -67,6 +156,8 @@ export default {
 @import "./../scss/_variables.scss";
 
 .container {
+  min-height: 100vh;
+
   &.flex {
     flex-wrap: wrap;
     align-items: flex-start;
