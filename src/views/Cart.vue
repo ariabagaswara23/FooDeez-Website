@@ -1,46 +1,116 @@
 <template>
-  <div class="container flex mt-15 mb-15">
+  <div class="container flex pt-15 pb-15">
     <div class="cart-container">
       <div class="cart-title rounded">
         <h1>Your Cart</h1>
       </div>
-      <div class="flex cart-item rounded" v-for="i in 4" :key="i">
-        <img class="image-food rounded" src="../assets/image-1.jpg" alt />
-        <div class="ml-2">
-          <p>Ayam Geprek</p>
-          <h4>Rp.15000</h4>
+      <div v-if="cartCount >= 1">
+        <div class="flex cart-item rounded" v-for="item in cart" :key="item.food.idMeal">
+          <img class="image-food rounded" :src="item.food.strMealThumb" alt />
+          <div class="ml-2" style="text-align: start;">
+            <p>{{ item.food.strMeal }}</p>
+            <h4>Rp.{{ moneyFormat(20000) }}</h4>
+          </div>
+          <div class="cart-content">
+            <button class="cart-button bg-primary rounded" @click.prevent="increaseCartQuantity(item)">
+              <font-awesome-icon icon="fa-solid fa-plus" />
+            </button>
+            <input type="number" :value="item.quantity" disabled style="width:40px; text-align:center;" />
+            <button class="cart-button bg-primary rounded" @click.prevent="decreaseCartQuantity(item)">
+              <font-awesome-icon icon="fa-solid fa-minus" />
+            </button>
+            <button class="cart-delete-button rounded ml-3" @click.prevent="removeFoodFromCart(item.food)">
+              <font-awesome-icon icon="fa-solid fa-trash" />
+            </button>
+          </div>
         </div>
-        <div class="cart-content">
-          <button class="cart-button bg-primary rounded">
-            <font-awesome-icon icon="fa-solid fa-plus" />
-          </button>
-          <input type="number" value="1" disabled style="width:40px; text-align:center;" />
-          <button class="cart-button bg-primary rounded">
-            <font-awesome-icon icon="fa-solid fa-minus" />
-          </button>
-          <button class="cart-delete-button rounded ml-3">
-            <font-awesome-icon icon="fa-solid fa-trash" />
-          </button>
-        </div>
+      </div>
+      <div class="center mt-5" v-else>
+        <img src="../assets/not-found.png" class="img-not-found" />
+        <h2 class="text-not-found">Oops, looks like you haven't added any food to the cart</h2>
+        <router-link :to="{ name: 'menu' }" class="empty-cart-button bg-primary rounded">
+          BACK TO MENU
+        </router-link>
       </div>
     </div>
     <div class="cart-summary rounded">
       <h1>Order Summary</h1>
       <div class="flex justify-between mt-2">
-        <p>Total Harga (3 barang)</p>
-        <p>Rp. 100.000</p>
+        <p>Cost Total ({{ cartCount }})</p>
+        <p>Rp.{{ moneyFormat(orderSummary * 20000) }}</p>
       </div>
       <div class="flex summary-total justify-between mt-2 mb-2">
-        <p>Total Harga</p>
-        <p>Rp. 100.000</p>
+        <p>Cost Total</p>
+        <p>Rp.{{ moneyFormat(orderSummary * 20000) }}</p>
       </div>
       <router-link :to="{ name: 'checkout' }" class="bg-primary center summary-button rounded">Checkout</router-link>
     </div>
   </div>
 </template>
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import Swal from 'sweetalert2'
 export default {
   name: 'Cart',
+  setup() {
+    const store = useStore()
+
+    const cart = computed(() => {
+      return store.state.cart.cart
+    })
+
+    const cartCount = computed(() => {
+      return store.getters['cart/cartCount']
+    })
+    const orderSummary = computed(() => {
+      return store.getters['cart/orderSummary']
+    })
+
+    const removeFoodFromCart = (item) => {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          store.dispatch('cart/removeFoodFromCart', item)
+          Swal.fire(
+            'Deleted!',
+            'Food has been deleted from your cart.',
+            'success'
+          )
+        }
+      })
+    }
+    const increaseCartQuantity = (item) => {
+      store.dispatch('cart/increaseCartQuantity', {
+        food: item.food,
+        quantity: 1
+      })
+    }
+    const decreaseCartQuantity = (item) => {
+      if (item.quantity !== 1) {
+        store.dispatch('cart/decreaseCartQuantity', {
+          food: item.food,
+          quantity: 1
+        })
+      }
+    }
+
+    return {
+      cart,
+      cartCount,
+      orderSummary,
+      removeFoodFromCart,
+      increaseCartQuantity,
+      decreaseCartQuantity
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -48,6 +118,8 @@ export default {
 @import "./../scss/_variables.scss";
 
 .container {
+  min-height: 100vh;
+
   &.flex {
     flex-wrap: wrap;
     align-items: flex-start;
@@ -59,6 +131,13 @@ export default {
 
     @include tablet {
       width: calc(70% - 10px);
+    }
+
+    .empty-cart-button {
+      padding: 15px;
+      margin-top: 10px;
+      display: inline-block;
+      color: $white-color;
     }
 
     .cart-item {

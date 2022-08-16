@@ -21,4 +21,12 @@ createApp(App)
   .use(router)
   .use(store)
   .component('font-awesome-icon', FontAwesomeIcon)
+  .mixin({
+    methods: {
+      moneyFormat(value) {
+        let val = (value / 1).toFixed(0).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      }
+    }
+  })
   .mount('#app')
