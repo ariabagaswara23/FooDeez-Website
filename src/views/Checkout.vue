@@ -1,6 +1,6 @@
 <template>
-  <div class="container flex pt-15 pb-15">
-    <div class="checkout-container">
+  <div class="container flex">
+    <div class="checkout-container rounded">
       <div class="checkout-title rounded">
         <h1>Checkout</h1>
       </div>
@@ -34,7 +34,7 @@
             <div v-if="validation.zipcode" class="text-danger" style="margin-top: 5px;">Please Insert ZipCode</div>
           </div>
         </div>
-        <div class="form-group mt-1">
+        <div class="form-group address-form mt-1">
           <textarea class="rounded mt-1" name="address" required id="address" rows="4" v-model="state.address"
             placeholder="Address"></textarea>
           <div v-if="validation.address" class="text-danger">Please Insert Address</div>
@@ -55,7 +55,10 @@
         <p>Cost Total</p>
         <p>Rp.{{ moneyFormat((orderSummary * 20000) + price) }}</p>
       </div>
-      <button @click="checkout" class="bg-primary center summary-button rounded">Pay Now</button>
+      <button @click="checkout" class="bg-primary center summary-button rounded">
+        <font-awesome-icon icon="fa-solid fa-cart-shopping" />
+        Order Now
+      </button>
       <!-- <router-link :to="{ name: 'checkout' }" class="bg-primary center summary-button rounded">Checkout</router-link> -->
     </div>
   </div>
@@ -120,7 +123,7 @@ export default {
           text: "Your Order will be processed",
           icon: "success",
           showConfirmButton: false,
-          timer: 2000
+          timer: 5000
         });
       }
       if (!state.name) {
@@ -157,6 +160,10 @@ export default {
 
 .container {
   min-height: 100vh;
+  padding-top: 7.5rem;
+  padding-bottom: 7.5rem;
+  padding-right: 20px;
+  padding-left: 20px;
 
   &.flex {
     flex-wrap: wrap;
@@ -168,10 +175,6 @@ export default {
     width: 100%;
     background-color: $white-color;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-
-    @include tablet {
-      width: calc(70% - 10px);
-    }
 
     .checkout-form {
       padding: 10px;
@@ -187,6 +190,7 @@ export default {
       .text-danger {
         color: #e61919;
         font-size: 0.8rem;
+        text-align: start;
       }
 
       &.name {
@@ -230,6 +234,10 @@ export default {
       }
     }
 
+    .address-form {
+      margin: 10px 5px;
+    }
+
     input,
     textarea,
     select {
@@ -245,7 +253,7 @@ export default {
 
     .checkout-title {
       padding: 10px;
-      text-align: start;
+      text-align: center;
       width: 100%;
       background-color: $tertiary-color;
       color: $brand-secondary-color;
@@ -259,12 +267,12 @@ export default {
     background-color: $tertiary-color;
     color: $brand-secondary-color;
 
-    @include tablet {
-      width: calc(30% - 10px);
+    h1 {
+      text-align: center;
     }
 
     .summary-total {
-      border-top: 1px solid #2b2b2b;
+      border-top: 1px solid $brand-secondary-color;
       padding-top: 10px;
     }
 

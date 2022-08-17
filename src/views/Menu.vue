@@ -19,7 +19,7 @@
           <div class="food-menu-item" v-for="food in filteredFood" :key="food.idMeal">
             <img class="food-img" :src="food.strMealThumb" alt="">
             <div class="food-content">
-              <h2 class="food-title">{{ food.strMeal }}</h2>
+              <h3 class="food-title">{{ food.strMeal }}</h3>
               <button class="add-to-cart-button" @click.prevent="addToCart(food)">
                 <font-awesome-icon icon="fa-solid fa-cart-plus" /> Add to Cart
               </button>
@@ -113,12 +113,12 @@ export default {
 }
 
 .food-title {
-  height: 60px !important;
-  font-size: 1.2rem;
+  height: 35px !important;
+  font-size: 1.1rem;
 
   @include tablet {
-    height: 110px !important;
-    font-size: 1.25rem;
+    height: 50px !important;
+    font-size: 1rem;
   }
 }
 </style>

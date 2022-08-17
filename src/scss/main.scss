@@ -54,6 +54,10 @@ button {
     width: 400px;
 }
 
+.img-cart-not-found {
+    width: 300px;
+}
+
 .text-not-found {
     color: $tertiary-color;
 }
@@ -63,6 +67,10 @@ button,
 input[type="text"] {
     min-width: 44px;
     min-height: 44px;
+}
+
+input[type="text"]:focus {
+    outline: 1px solid $tertiary-color
 }
 
 select,
@@ -117,7 +125,7 @@ textarea {
 
 .content-title {
     color: $primary-color;
-    padding: 1rem;
+    padding: 0.3rem 1rem;
     text-align: center;
 }
 

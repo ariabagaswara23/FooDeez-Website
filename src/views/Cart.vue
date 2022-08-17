@@ -1,13 +1,13 @@
 <template>
-  <div class="container flex pt-15 pb-15">
+  <div class="container flex">
     <div class="cart-container">
       <div class="cart-title rounded">
         <h1>Your Cart</h1>
       </div>
       <div v-if="cartCount >= 1">
         <div class="flex cart-item rounded" v-for="item in cart" :key="item.food.idMeal">
-          <img class="image-food rounded" :src="item.food.strMealThumb" alt />
-          <div class="ml-2" style="text-align: start;">
+          <img class="cart-image-food rounded" :src="item.food.strMealThumb" alt />
+          <div class="cart-food-information" style="text-align: start;">
             <p>{{ item.food.strMeal }}</p>
             <h4>Rp.{{ moneyFormat(20000) }}</h4>
           </div>
@@ -15,7 +15,8 @@
             <button class="cart-button bg-primary rounded" @click.prevent="increaseCartQuantity(item)">
               <font-awesome-icon icon="fa-solid fa-plus" />
             </button>
-            <input type="number" :value="item.quantity" disabled style="width:40px; text-align:center;" />
+            <input type="number" :value="item.quantity" disabled
+              style="width:40px; text-align:center; background-color: transparent;" />
             <button class="cart-button bg-primary rounded" @click.prevent="decreaseCartQuantity(item)">
               <font-awesome-icon icon="fa-solid fa-minus" />
             </button>
@@ -26,7 +27,7 @@
         </div>
       </div>
       <div class="center mt-5" v-else>
-        <img src="../assets/not-found.png" class="img-not-found" />
+        <img src="../assets/not-found.png" class="img-cart-not-found" />
         <h2 class="text-not-found">Oops, looks like you haven't added any food to the cart</h2>
         <router-link :to="{ name: 'menu' }" class="empty-cart-button bg-primary rounded">
           BACK TO MENU
@@ -36,7 +37,7 @@
     <div class="cart-summary rounded">
       <h1>Order Summary</h1>
       <div class="flex justify-between mt-2">
-        <p>Cost Total ({{ cartCount }})</p>
+        <p>Food Cost ({{ cartCount }})</p>
         <p>Rp.{{ moneyFormat(orderSummary * 20000) }}</p>
       </div>
       <div class="flex summary-total justify-between mt-2 mb-2">
@@ -119,6 +120,8 @@ export default {
 
 .container {
   min-height: 100vh;
+  padding-top: 7.5rem;
+  padding-bottom: 7.5rem;
 
   &.flex {
     flex-wrap: wrap;
@@ -138,21 +141,42 @@ export default {
       margin-top: 10px;
       display: inline-block;
       color: $white-color;
+      transition: 0.5s ease-out;
+
+      &:hover {
+        background-color: $brand-secondary-color;
+      }
     }
 
     .cart-item {
       margin: 15px 0px;
-      padding: 10px;
+      padding: 10px 15px;
       position: relative;
       min-height: 100px;
       align-items: center;
       background-color: $white-color;
       box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
 
-      .image-food {
-        width: 75px;
-        height: 75px;
+      .cart-image-food {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
+
+        @include tablet {
+          width: 100px;
+          height: 100px;
+        }
+      }
+
+      .cart-food-information {
+        margin: 0;
+        margin-top: 1rem;
+        text-align: start;
+
+        @include tablet {
+          margin-left: 1rem;
+          margin-top: 0;
+        }
       }
 
       .cart-content {
@@ -182,6 +206,7 @@ export default {
       }
 
       .cart-button {
+        background-color: $tertiary-color;
         transition: 0.5s;
         color: $white-color;
         border: 0;
