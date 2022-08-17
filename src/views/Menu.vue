@@ -114,10 +114,10 @@ export default {
 
 .food-title {
   height: 35px !important;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 
   @include tablet {
-    height: 50px !important;
+    height: 65px !important;
     font-size: 1rem;
   }
 }
